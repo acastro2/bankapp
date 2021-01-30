@@ -1,21 +1,20 @@
 from datetime import datetime
 from app import db
 
-class User(db.Model):
+class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
-    email = db.Column(db.String(120), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
+    name = db.Column(db.String(150), index=True, nullable=False)
+    account = db.Column(db.String(20), index=True, unique=True, nullable=False)
+    cpf = db.Column(db.String(11), index=True, unique=True, nullable=False)
 
-    # The __repr__ method tells Python how to print objects of this class. We will use this for debugging.
-    def __repr__(self):
-        return '<User {}>'.format(self.username)
-
-class Post(db.Model):
+class TransactionType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
+    description = db.Column(db.String(150))
+
+class Transaction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(20), nullable=False)
+    from_customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
+    to_customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
+    amount = db.Column(db.Float, nullable=False)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    def __repr__(self):
-        return '<Post {}>'.format(self.body)
