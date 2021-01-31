@@ -13,9 +13,41 @@ For more information on pip requirements files check the [documentation](https:/
 ## Setup DB
 
 ```bash
+# Create a migration repository
 flask db init
+
+# Generate migration
 flask db migrate
+
+# Apply migration
 flask db upgrade
+```
+
+For manually creating a customer:
+
+```python
+from app import db
+from app.models import Customer
+
+# Create Customer 1
+c1 = Customer(name="Alexandre", account="12345", cpf="12345678900")
+db.session.add(c1)
+db.session.commit()
+
+# Add funds to play with transactions and withdraw
+transaction = Transaction(
+    type="Deposit",
+    to_customer_id=c1.id,
+    amount=100000,
+  )
+
+db.session.add(transaction)
+db.session.commit()
+
+# Create Customer 2
+c2 = Customer(name="Tester", account="12344", cpf="12345678901")
+db.session.add(c2)
+db.session.commit()
 ```
 
 ## Run app
@@ -30,6 +62,29 @@ pip install -r requirements.txt
 # Run Flask
 flask run
 ```
+
+## Manual testing the app
+
+### Balance
+
+```bash
+curl "http://127.0.0.1:5000/balance/1"
+```
+
+### Withdraw
+
+```bash
+```
+
+### Transfer
+
+```bash
+```
+
+## Future implementations
+
+* Customer authentication. Currently you can simply POST to the API and add any transactions without validating that you are the customer creating the transaction.
+* Improve Customer model with more required data
 
 ## Documentation
 
