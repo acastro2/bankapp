@@ -27,7 +27,7 @@ For manually creating a customer:
 
 ```python
 from app import db
-from app.models import Customer
+from app.models import Customer, Transaction
 
 # Create Customer 1
 c1 = Customer(name="Alexandre", account="12345", cpf="12345678900")
