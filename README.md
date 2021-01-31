@@ -8,7 +8,7 @@ API de saque e transferência
 pip install -r requirements.txt
 ```
 
-For more information on pip requirements files check the [documentation](https://pip.pypa.io/en/stable/reference/pip_install/#requirements-file-format)
+For more information on pip requirements, files check the [documentation](https://pip.pypa.io/en/stable/reference/pip_install/#requirements-file-format)
 
 ## Database
 
@@ -59,7 +59,7 @@ db.session.commit()
 ## Run app
 
 ```bash
-# Create virtual environment
+# Create the virtual environment
 python3 -m venv venv
 
 # Install Dependencies
@@ -102,9 +102,24 @@ curl -X "POST" "http://127.0.0.1:5000/transfer" \
 
 ## Future implementations
 
-* Customer authentication. Currently you can simply POST to the API and add any transactions without validating that you are the customer creating the transaction.
+* Customer authentication. You can currently POST to the API and add any transactions without validating that you are the customer creating the transaction.
 * Improve Customer model with more required data
 * Migrate from SQLite to PostgreSQL
+* Migrate to Cloud Provider
+
+## Proposed Serverless Architecture
+
+![AWS Diagram](docs/imgs/aws.png)
+
+This is an oversimplification of the architecture:
+
+* Use Route53 to define the DNS.
+* API Gateway to create the internet accessible API endpoints or create a VPC for internal use
+* Lambdas to run the Flask API
+* Amazon RDS to store the transactions
+* Amazon Cognito to store user credentials and provide authentication
+* AWS CloudTrail for audit and compliance
+* We would also use AWS CloudWatch for logs
 
 ## Documentation
 
