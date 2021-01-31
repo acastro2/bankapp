@@ -4,3 +4,5 @@ flask-migrate
 python-dotenv
 pytest
 pylint
+pep8
+autopep8

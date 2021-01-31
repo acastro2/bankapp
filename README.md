@@ -85,6 +85,7 @@ curl "http://127.0.0.1:5000/balance/1"
 
 * Customer authentication. Currently you can simply POST to the API and add any transactions without validating that you are the customer creating the transaction.
 * Improve Customer model with more required data
+* Migrate from SQLite to PostgreSQL
 
 ## Documentation
 

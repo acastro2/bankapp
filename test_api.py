@@ -6,11 +6,13 @@ from config import basedir
 from app import app, db
 from app.models import Customer, Transaction
 
+
 @pytest.fixture(scope="session")
 def client():
     app.config['TESTING'] = True
     app.config['WTF_CSRF_ENABLED'] = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test.db')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
+        os.path.join(basedir, 'test.db')
 
     with app.test_client() as client:
         with app.app_context():
@@ -21,6 +23,7 @@ def client():
     db.session.remove()
     db.drop_all()
     os.remove(os.path.join(basedir, 'test.db'))
+
 
 def setup_db():
     c1 = Customer(name="Alexandre", account="12345", cpf="12345678900")
@@ -40,12 +43,14 @@ def setup_db():
     db.session.add(c2)
     db.session.commit()
 
+
 def test_balance(client):
     rv = client.get('/balance/1')
     json_data = rv.get_json()
 
     assert json_data['account'] == '12345'
     assert json_data['balance'] == 100000.0
+
 
 def test_withdraw(client):
     rv = client.post('/withdraw', json={
@@ -57,6 +62,7 @@ def test_withdraw(client):
 
     print(json_data)
     assert json_data['transaction_id'] == 2
+
 
 def test_transfer(client):
     rv = client.post('/withdraw', json={
