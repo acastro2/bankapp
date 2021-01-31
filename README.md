@@ -10,7 +10,13 @@ pip install -r requirements.txt
 
 For more information on pip requirements files check the [documentation](https://pip.pypa.io/en/stable/reference/pip_install/#requirements-file-format)
 
-## Setup DB
+## Database
+
+### Model
+
+![Entity Relationship Diagram](docs/imgs/erd.png)
+
+### Setup
 
 ```bash
 # Create a migration repository
@@ -74,11 +80,24 @@ curl "http://127.0.0.1:5000/balance/1"
 ### Withdraw
 
 ```bash
+curl -X "POST" "http://127.0.0.1:5000/withdraw" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "from_customer_id": "1"
+  "amount": "100",
+}'
 ```
 
 ### Transfer
 
 ```bash
+curl -X "POST" "http://127.0.0.1:5000/transfer" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "from_customer_id": "1"
+  "to_customer_id": "2",
+  "amount": "100",
+}'
 ```
 
 ## Future implementations
